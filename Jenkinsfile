@@ -4,7 +4,7 @@ pipeline {
     environment {
         UNITY_PATH = "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.4f1\\Editor\\Unity.exe"
         repo = "https://github.com/IvanMoreno/JenkinsTest.git"
-        branch = "master"
+        branch = "main"
         workingDir = "${WORKSPACE}"
     }
     
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 bat """
                     echo "Cloning repository..."
-                    git clone --branch ${branch} --depth 1 ${repo} "${workingDir}\\${branch}"
+                    git clone --branch ${branch} --depth 1 ${repo} "${workingDir}"
                 """
             }
         }
@@ -27,11 +27,11 @@ pipeline {
             steps {
                 bat """
                     echo "Running Unity tests..."
-                    cd "${workingDir}\\${branch}"
+                    cd "${workingDir}"
                     
                     if not exist "CI" mkdir "CI"
                     
-                    "${UNITY_PATH}" -batchmode -projectPath "${workingDir}\\${branch}" -runTests -testResults "${workingDir}\\${branch}\\CI\\results.xml" -testPlatform EditMode -nographics -quit
+                    "${UNITY_PATH}" -batchmode -projectPath "${workingDir}" -runTests -testResults "${workingDir}\\CI\\results.xml" -testPlatform EditMode -nographics -quit
                 """
             }
         }
