@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         UNITY_PATH = "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.4f1\\Editor\\Unity.exe"
-        repo = "https://github.com/IvanMoreno/ChristmasLearning.git"
+        repo = "https://github.com/IvanMoreno/JenkinsTest.git"
         branch = "master"
         workingDir = "${WORKSPACE}"
     }
