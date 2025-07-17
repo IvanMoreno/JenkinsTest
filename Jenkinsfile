@@ -35,5 +35,18 @@ pipeline {
                 """
             }
         }
+        
+        stage('Build Windows Application') {
+            steps {
+                bat """
+                    echo "Building Windows application..."
+                    cd "${workingDir}"
+                    
+                    if not exist "CI" mkdir "CI"
+                    
+                    "${UNITY_PATH}" -executeMethod BuildScript.BuildWindows -projectPath "${workingDir}" -quit -batchmode -buildVersion "${params.BUILD_VERSION}" -buildConfig "${params.BUILD_CONFIGURATION}" -outputPath "${params.OUTPUT_PATH}" -companyName "${params.COMPANY_NAME}" -productName "${params.PRODUCT_NAME}" -logFile "${workingDir}\\CI\\build.log"
+                """
+            }
+        }
     }
 }
