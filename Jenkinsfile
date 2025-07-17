@@ -31,7 +31,7 @@ pipeline {
                     
                     if not exist "CI" mkdir "CI"
                     
-                    "${UNITY_PATH}" -batchmode -projectPath "${workingDir}" -runTests -testResults "${workingDir}\\CI\\results.xml" -testPlatform EditMode -nographics -quit
+                    "${UNITY_PATH}" -runTests -projectPath "${workingDir}" -exit -batchmode -testResults "${workingDir}\\CI\\results.xml" -testPlatform EditMode
                 """
             }
         }
