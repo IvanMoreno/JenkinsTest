@@ -19,6 +19,28 @@ pipeline {
             }
         }
         
+        stage('Run Tests') {
+            steps {
+                bat """
+                    echo "Running Unity tests..."
+                    cd "${workingDir}"
+                    
+                    if not exist "CI" mkdir "CI"
+                    
+                    "${UNITY_PATH}" -runTests -projectPath "${workingDir}" -exit -batchmode -testResults "${workingDir}\\CI\\results.xml" -testPlatform EditMode
+                """
+            }
+        }
+        
+        stage('Test No publish') {
+            steps {
+                bat """
+                    if not exist "CI" mkdir "CI"
+                    "${UNITY_PATH}" -runTests -projectPath "%WORKSPACE%" -exit -batchmode -testResults "%WORKSPACE%\\CI\\results.xml" -testPlatform EditMode
+                """
+            }
+        }
+        
         stage('Test') {
             steps {
                 bat """
