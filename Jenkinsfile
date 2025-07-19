@@ -12,7 +12,21 @@ pipeline {
     }
     
     stages {
+        stage('Checkout') {
+            steps {
+                cleanWs()
+                bat "git clone ${REPO_URL} ."
+            }
+        }
         
+        stage('Test') {
+            steps {
+                bat """
+                    if not exist "CI" mkdir "CI"
+                    "${UNITY_PATH}" -runTests -projectPath "%WORKSPACE%" -exit -batchmode -testResults "%WORKSPACE%\\CI\\results.xml" -testPlatform EditMode
+                """
+            }
+        }
         
         stage('Build') {
             steps {
