@@ -19,14 +19,26 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
+        stage('Tests') {
             steps {
-                dir("${workingDir}") {
-                    bat "mkdir CI 2>nul || echo CI directory ready"
-                    bat "\"${UNITY_PATH}\" -runTests -projectPath \"%CD%\" -exit -batchmode -testResults \"%CD%\\CI\\results.xml\" -testPlatform EditMode -nographics"
-                }
-                
                 script {
+                    def ciDir = new File("${workingDir}/CI")
+                    ciDir.mkdirs()
+                    
+                    def unityCmd = [
+                        "${UNITY_PATH}",
+                        "-runTests",
+                        "-projectPath", "${workingDir}",
+                        "-exit",
+                        "-batchmode", 
+                        "-testResults", "${workingDir}/CI/results.xml",
+                        "-testPlatform", "EditMode",
+                        "-nographics"
+                    ]
+                    
+                    def process = unityCmd.execute()
+                    process.waitFor()
+                    
                     def results = readFile("${workingDir}/CI/results.xml")
                     def failures = (results =~ /failed="(\d+)"/)[0][1] as Integer
                     def errors = (results =~ /errors="(\d+)"/)[0][1] as Integer
