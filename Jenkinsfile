@@ -23,11 +23,11 @@ pipeline {
             steps {
                 bat """
                     echo "Running Unity tests..."
-                    cd "${workingDir}"
+                    cd "%WORKSPACE%"
                     
                     if not exist "CI" mkdir "CI"
                     
-                    "${UNITY_PATH}" -runTests -projectPath "${workingDir}" -exit -batchmode -testResults "${workingDir}\\CI\\results.xml" -testPlatform EditMode
+                    "${UNITY_PATH}" -runTests -projectPath "%WORKSPACE%" -exit -batchmode -testResults "%WORKSPACE%\\CI\\results.xml" -testPlatform EditMode
                 """
             }
         }
