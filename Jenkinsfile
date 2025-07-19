@@ -31,9 +31,9 @@ pipeline {
         stage('Build') {
             steps {
                 bat """
-                    "${UNITY_PATH}" -executeMethod SimpleBuildScript.Build -projectPath "%WORKSPACE%" -quit -batchmode -version "${params.BUILD_VERSION}" -config "${params.BUILD_CONFIG}"
+                    "${UNITY_PATH}" -executeMethod SimpleBuildScript.Build -projectPath "%WORKSPACE%" -quit -batchmode
                 """
-                archiveArtifacts artifacts: '**/*', fingerprint: true
+                archiveArtifacts artifacts: 'Build/**/*', fingerprint: true
             }
         }
     }
