@@ -49,7 +49,7 @@ pipeline {
             }
         }
         
-        stage('Build') {
+        stage('Build x') {
             steps {
                 bat """
                     "${UNITY_PATH}" -executeMethod SimpleBuildScript.Build -projectPath "%WORKSPACE%" -quit -batchmode -version "${params.BUILD_VERSION}" -config "${params.BUILD_CONFIG}"
