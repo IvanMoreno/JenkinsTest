@@ -25,7 +25,7 @@ pipeline {
                     if not exist "CI" mkdir "CI"
                     "${UNITY_PATH}" -runTests -projectPath "%WORKSPACE%" -exit -batchmode -testResults "%WORKSPACE%\\CI\\results.xml" -testPlatform EditMode
                 """
-                publishTestResults testResultsPattern: 'CI/results.xml'
+                publishTestResults testResultsPattern: "${WORKSPACE}/CI/results.xml"
             }
         }
         
