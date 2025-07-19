@@ -19,12 +19,35 @@ pipeline {
             }
         }
         
-        stage('Test') {
+        stage('Tests') {
             steps {
-                bat """
-                    if not exist "CI" mkdir "CI"
-                    "${UNITY_PATH}" -runTests -projectPath "%WORKSPACE%" -exit -batchmode -testResults "%WORKSPACE%\\CI\\results.xml" -testPlatform EditMode
-                """
+                script {
+                    def ciDir = new File("${workingDir}/CI")
+                    ciDir.mkdirs()
+                    
+                    def unityCmd = [
+                        "${UNITY_PATH}",
+                        "-runTests",
+                        "-projectPath", "${workingDir}",
+                        "-exit",
+                        "-batchmode", 
+                        "-testResults", "${workingDir}/CI/results.xml",
+                        "-testPlatform", "EditMode",
+                        "-nographics"
+                    ]
+                    
+                    def process = unityCmd.execute()
+                    process.waitFor()
+                    
+                    def results = readFile("${workingDir}/CI/results.xml")
+                    def failures = (results =~ /failed="(\d+)"/)[0][1] as Integer
+                    def errors = (results =~ /errors="(\d+)"/)[0][1] as Integer
+                    
+                    if (failures > 0 || errors > 0) {
+                        error("Tests failed: ${failures} failures, ${errors} errors")
+                    }
+                }
+                
                 publishTestResults testResultsPattern: 'CI/results.xml'
             }
         }
