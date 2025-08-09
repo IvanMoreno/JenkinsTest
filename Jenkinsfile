@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                bat "git pull ${REPO_URL} ."
+                bat "git pull ${REPO_URL}"
             }
         }
         
