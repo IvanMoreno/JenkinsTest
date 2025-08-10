@@ -14,7 +14,7 @@ public static class SimpleBuildScript
         PlayerSettings.bundleVersion = version;
         PlayerSettings.productName = "MyGame";
         
-        string buildPath = Path.Combine(Directory.GetCurrentDirectory(), "Build", $"MyGame_{version}.exe");
+        string buildPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Build", $"MyGame_{version}.exe");
         Directory.CreateDirectory(Path.GetDirectoryName(buildPath));
         
         string[] scenes = GetScenes();
