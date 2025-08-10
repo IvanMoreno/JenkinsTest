@@ -39,7 +39,7 @@ pipeline {
         stage('Publish') {
             steps {
                 bat """
-                    butler push "%WORKSPACE%\Build" ivanjorli/jenkins-test:windows
+                    butler push "%WORKSPACE%/Build" ivanjorli/jenkins-test:windows
                 """
             }
         }
