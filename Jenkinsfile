@@ -4,13 +4,11 @@ pipeline {
     environment {
         UNITY_PATH = "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.4f1\\Editor\\Unity.exe"
         REPO_URL = "https://github.com/IvanMoreno/JenkinsTest.git"
-        ITCH_IO = credentials('ITCH_IO')
     }
     
     stages {
         stage('Checkout') {
             steps {
-                echo "Username ${ITCH_IO_USR} and Password ${ITCH_IO_PSW}"
                 bat "git pull ${REPO_URL}"
             }
         }
