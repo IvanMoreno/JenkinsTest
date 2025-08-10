@@ -5,7 +5,9 @@ pipeline {
         stage('Publish') {
             steps {
                 dir('..') {
-                    butler push "${pwd()}/Build" ivanjorli/jenkins-test:windows
+                    bat """
+                        butler push "${pwd()}/Build" ivanjorli/jenkins-test:windows
+                    """
                 }
             }
             post {
