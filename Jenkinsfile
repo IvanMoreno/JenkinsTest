@@ -30,5 +30,13 @@ pipeline {
                 archiveArtifacts artifacts: 'Build/**/*', fingerprint: true
             }
         }
+        
+        stage('Publish') {
+            steps {
+                bat """
+                    butler push "%WORKSPACE%/Build" ivanjorli/jenkins-test:windows
+                """
+            }
+        }
     }
 }
