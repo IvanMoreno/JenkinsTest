@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Username ${ITCH_IO_USRM} and Password ${ITCH_IO_PSW}"
+                echo "Username ${ITCH_IO_USR} and Password ${ITCH_IO_PSW}"
                 bat "git pull ${REPO_URL}"
             }
         }
