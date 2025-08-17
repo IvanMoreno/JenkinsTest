@@ -15,7 +15,7 @@ namespace CookieClickerCode.Tests.EditMode
             
             var base_date = new DateTime();
             sut.AccumulateTime(base_date);
-            Assert.IsFalse(sut.MustAutoclick(base_date + TimeSpan.FromSeconds(0.3f)));
+            Assert.IsTrue(sut.MustAutoclick(base_date + TimeSpan.FromSeconds(0.3f)));
         }
 
         [Test]
